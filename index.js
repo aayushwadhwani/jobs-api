@@ -1,12 +1,23 @@
 require('dotenv').config();
 const express = require('express');
+
+const auth = require('./routes/auth'); 
+const jobsRouter = require('./routes/jobs');
+const notFound = require('./errors/notFound');
 const connectDB = require('./db/connect');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+
 app.get('/',(req,res)=> {
     res.send('Hello from the jobs api');
 });
+
+app.use('/api/v1/auth',auth);
+app.use('/api/v1/jobs',jobsRouter)
+
+app.use(notFound);
 
 const start = async() => {
     try {
