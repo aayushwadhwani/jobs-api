@@ -5,8 +5,9 @@ const auth = require('./routes/auth');
 const jobsRouter = require('./routes/jobs');
 const notFound = require('./errors/notFound');
 const connectDB = require('./db/connect');
+const errorHandler = require('./middleware/error-handler');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
@@ -18,6 +19,7 @@ app.use('/api/v1/auth',auth);
 app.use('/api/v1/jobs',jobsRouter)
 
 app.use(notFound);
+app.use(errorHandler);
 
 const start = async() => {
     try {
